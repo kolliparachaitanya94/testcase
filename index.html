@@ -207,7 +207,7 @@
                 teamCell.innerHTML = '-';
                 timeCell.innerHTML = '-';
                 // Clear reservation information
-                reservations[deviceId] = undefined;
+                delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
             }
         }
@@ -229,7 +229,7 @@
                 teamCell.innerHTML = '-';
                 timeCell.innerHTML = '-';
                 // Clear reservation information
-                reservations[deviceId] = undefined;
+                delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
             } else {
                 alert("You are not authorized to release this device.");
