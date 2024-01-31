@@ -85,7 +85,7 @@
                         <button id="releaseButton2" onclick="releaseDevice(2)" disabled>Release</button>
                     </td>
                 </tr>
-                <!-- Add more rows for additional devices -->
+                <!-- Add similar rows for other devices and users -->
             </tbody>
         </table>
     </div>
@@ -93,7 +93,8 @@
     <script>
         const userDatabase = [
             { username: "user1", password: "pass1" },
-            { username: "user2", password: "pass2" }
+            { username: "user2", password: "pass2" },
+            // Add more users as needed
         ];
 
         // Function to retrieve reservation information from local storage
@@ -165,6 +166,8 @@
             const timeCell = document.getElementById(`time${deviceId}`);
             const userNameInput = document.getElementById(`userName${deviceId}`).value;
             const teamNameInput = document.getElementById(`teamName${deviceId}`).value;
+            const reserveButton = document.getElementById(`reserveButton${deviceId}`);
+            const releaseButton = document.getElementById(`releaseButton${deviceId}`);
 
             if (availabilityCell.innerHTML === 'Available' && userNameInput !== '' && teamNameInput !== '') {
                 availabilityCell.innerHTML = 'Reserved';
@@ -176,9 +179,11 @@
                 reservations[deviceId] = { user: userNameInput, team: teamNameInput };
                 saveReservationsToStorage(reservations);
                 // Disable reserve button after reservation
-                document.getElementById(`reserveButton${deviceId}`).disabled = true;
+                reserveButton.disabled = true;
                 // Enable release button for the user who reserved the device
-                document.getElementById(`releaseButton${deviceId}`).disabled = false;
+                releaseButton.disabled = false;
+                // Change the label on the button to "Release"
+                releaseButton.innerHTML = 'Release';
             } else if (availabilityCell.innerHTML === 'Reserved' && (userNameInput === '' || teamNameInput === '')) {
                 availabilityCell.innerHTML = 'Available';
                 availabilityCell.style.color = 'green';
@@ -189,9 +194,11 @@
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
                 // Enable reserve button after release
-                document.getElementById(`reserveButton${deviceId}`).disabled = false;
+                reserveButton.disabled = false;
                 // Disable release button after releasing the device
-                document.getElementById(`releaseButton${deviceId}`).disabled = true;
+                releaseButton.disabled = true;
+                // Change the label on the button back to "Reserve"
+                reserveButton.innerHTML = 'Reserve';
             }
         }
 
@@ -201,6 +208,8 @@
             const teamCell = document.getElementById(`team${deviceId}`);
             const timeCell = document.getElementById(`time${deviceId}`);
             const userNameInput = document.getElementById(`userName${deviceId}`).value;
+            const reserveButton = document.getElementById(`reserveButton${deviceId}`);
+            const releaseButton = document.getElementById(`releaseButton${deviceId}`);
 
             // Check if the current user matches the user who reserved the device
             const isAuthorizedUser = reservations[deviceId] && reservations[deviceId].user === userNameInput;
@@ -215,9 +224,11 @@
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
                 // Enable reserve button after release
-                document.getElementById(`reserveButton${deviceId}`).disabled = false;
+                reserveButton.disabled = false;
                 // Disable release button after releasing the device
-                document.getElementById(`releaseButton${deviceId}`).disabled = true;
+                releaseButton.disabled = true;
+                // Change the label on the button back to "Reserve"
+                reserveButton.innerHTML = 'Reserve';
             } else {
                 alert("You are not authorized to release this device.");
             }
