@@ -3,55 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Frontend Example</title>
+  <title>Creative Login Page</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #3498db;
     }
 
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 10px;
-      text-align: center;
-    }
-
-    section {
+    .login-container {
+      background-color: #fff;
       padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       text-align: center;
+    }
+
+    .login-container h1 {
+      color: #3498db;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
     }
 
     button {
-      padding: 10px;
-      font-size: 16px;
-      background-color: #4CAF50;
+      background-color: #3498db;
       color: #fff;
+      padding: 10px 20px;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Simple Website</h1>
-  </header>
-
-  <section>
-    <h2>Welcome to our website!</h2>
-    <p>This is a basic example of a front-end webpage.</p>
-    <button onclick="showMessage()">Click me</button>
-    <p id="demo"></p>
-  </section>
-
-  <script>
-    function showMessage() {
-      document.getElementById("demo").innerHTML = "Hello, you clicked the button!";
-    }
-  </script>
+  <div class="login-container">
+    <h1>Login</h1>
+    <form>
+      <input type="text" placeholder="Username" required>
+      <br>
+      <input type="password" placeholder="Password" required>
+      <br>
+      <button type="submit">Log In</button>
+    </form>
+  </div>
 
 </body>
 </html>
