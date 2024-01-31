@@ -68,8 +68,8 @@
                     <td>
                         <input type="text" id="userName1" placeholder="Your Name">
                         <input type="text" id="teamName1" placeholder="Team Name">
-                        <button onclick="reserveDevice(1)">Reserve</button>
-                        <button id="releaseButton1" onclick="releaseDevice(1)">Release</button>
+                        <button id="reserveButton1" onclick="reserveDevice(1)">Reserve</button>
+                        <button id="releaseButton1" onclick="releaseDevice(1)" disabled>Release</button>
                     </td>
                 </tr>
                 <tr>
@@ -81,8 +81,8 @@
                     <td>
                         <input type="text" id="userName2" placeholder="Your Name">
                         <input type="text" id="teamName2" placeholder="Team Name">
-                        <button onclick="reserveDevice(2)">Reserve</button>
-                        <button id="releaseButton2" onclick="releaseDevice(2)">Release</button>
+                        <button id="reserveButton2" onclick="reserveDevice(2)">Reserve</button>
+                        <button id="releaseButton2" onclick="releaseDevice(2)" disabled>Release</button>
                     </td>
                 </tr>
                 <!-- Add more rows for additional devices -->
@@ -175,6 +175,8 @@
                 // Store reservation information
                 reservations[deviceId] = { user: userNameInput, team: teamNameInput };
                 saveReservationsToStorage(reservations);
+                // Disable the reserve button for all devices
+                disableReserveButtons();
                 // Enable the release button for the current user
                 document.getElementById(`releaseButton${deviceId}`).disabled = false;
             } else if (availabilityCell.innerHTML === 'Reserved' && (userNameInput === '' || teamNameInput === '')) {
@@ -186,6 +188,8 @@
                 // Clear reservation information
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
+                // Enable the reserve button for all devices
+                enableReserveButtons();
                 // Disable the release button when releasing the device
                 document.getElementById(`releaseButton${deviceId}`).disabled = true;
             }
@@ -210,10 +214,26 @@
                 // Clear reservation information
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
+                // Enable the reserve button for all devices
+                enableReserveButtons();
                 // Disable the release button after releasing the device
                 document.getElementById(`releaseButton${deviceId}`).disabled = true;
             } else {
                 alert("You are not authorized to release this device.");
+            }
+        }
+
+        // Disable reserve buttons for all devices
+        function disableReserveButtons() {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`reserveButton${i}`).disabled = true;
+            }
+        }
+
+        // Enable reserve buttons for all devices
+        function enableReserveButtons() {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`reserveButton${i}`).disabled = false;
             }
         }
 
