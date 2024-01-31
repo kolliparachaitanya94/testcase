@@ -175,9 +175,9 @@
                 // Store reservation information
                 reservations[deviceId] = { user: userNameInput, team: teamNameInput };
                 saveReservationsToStorage(reservations);
-                // Disable the reserve button for all devices
-                disableReserveButtons();
-                // Enable the release button for the current user
+                // Disable reserve button after reservation
+                document.getElementById(`reserveButton${deviceId}`).disabled = true;
+                // Enable release button for the user who reserved the device
                 document.getElementById(`releaseButton${deviceId}`).disabled = false;
             } else if (availabilityCell.innerHTML === 'Reserved' && (userNameInput === '' || teamNameInput === '')) {
                 availabilityCell.innerHTML = 'Available';
@@ -188,9 +188,9 @@
                 // Clear reservation information
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
-                // Enable the reserve button for all devices
-                enableReserveButtons();
-                // Disable the release button when releasing the device
+                // Enable reserve button after release
+                document.getElementById(`reserveButton${deviceId}`).disabled = false;
+                // Disable release button after releasing the device
                 document.getElementById(`releaseButton${deviceId}`).disabled = true;
             }
         }
@@ -214,26 +214,12 @@
                 // Clear reservation information
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
-                // Enable the reserve button for all devices
-                enableReserveButtons();
-                // Disable the release button after releasing the device
+                // Enable reserve button after release
+                document.getElementById(`reserveButton${deviceId}`).disabled = false;
+                // Disable release button after releasing the device
                 document.getElementById(`releaseButton${deviceId}`).disabled = true;
             } else {
                 alert("You are not authorized to release this device.");
-            }
-        }
-
-        // Disable reserve buttons for all devices
-        function disableReserveButtons() {
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById(`reserveButton${i}`).disabled = true;
-            }
-        }
-
-        // Enable reserve buttons for all devices
-        function enableReserveButtons() {
-            for (let i = 1; i <= 4; i++) {
-                document.getElementById(`reserveButton${i}`).disabled = false;
             }
         }
 
