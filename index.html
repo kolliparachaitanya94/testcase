@@ -69,7 +69,7 @@
                         <input type="text" id="userName1" placeholder="Your Name">
                         <input type="text" id="teamName1" placeholder="Team Name">
                         <button onclick="reserveDevice(1)">Reserve</button>
-                        <button onclick="releaseDevice(1)">Release</button>
+                        <button id="releaseButton1" onclick="releaseDevice(1)">Release</button>
                     </td>
                 </tr>
                 <tr>
@@ -82,44 +82,18 @@
                         <input type="text" id="userName2" placeholder="Your Name">
                         <input type="text" id="teamName2" placeholder="Team Name">
                         <button onclick="reserveDevice(2)">Reserve</button>
-                        <button onclick="releaseDevice(2)">Release</button>
+                        <button id="releaseButton2" onclick="releaseDevice(2)">Release</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>E500 User1</td>
-                    <td id="availability3">Available</td>
-                    <td id="user3">-</td>
-                    <td id="team3">-</td>
-                    <td id="time3">-</td>
-                    <td>
-                        <input type="text" id="userName3" placeholder="Your Name">
-                        <input type="text" id="teamName3" placeholder="Team Name">
-                        <button onclick="reserveDevice(3)">Reserve</button>
-                        <button onclick="releaseDevice(3)">Release</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>User4 Device</td>
-                    <td id="availability4">Available</td>
-                    <td id="user4">-</td>
-                    <td id="team4">-</td>
-                    <td id="time4">-</td>
-                    <td>
-                        <input type="text" id="userName4" placeholder="Your Name">
-                        <input type="text" id="teamName4" placeholder="Team Name">
-                        <button onclick="reserveDevice(4)">Reserve</button>
-                        <button onclick="releaseDevice(4)">Release</button>
-                    </td>
-                </tr>
+                <!-- Add more rows for additional devices -->
             </tbody>
         </table>
     </div>
 
     <script>
         const userDatabase = [
-            { username: "chaitu", password: "chaitu" },
-            { username: "muni", password: "muni" },
-            { username: "user3", password: "pass3" }
+            { username: "user1", password: "pass1" },
+            { username: "user2", password: "pass2" }
         ];
 
         // Function to retrieve reservation information from local storage
@@ -201,6 +175,8 @@
                 // Store reservation information
                 reservations[deviceId] = { user: userNameInput, team: teamNameInput };
                 saveReservationsToStorage(reservations);
+                // Enable the release button for the current user
+                document.getElementById(`releaseButton${deviceId}`).disabled = false;
             } else if (availabilityCell.innerHTML === 'Reserved' && (userNameInput === '' || teamNameInput === '')) {
                 availabilityCell.innerHTML = 'Available';
                 availabilityCell.style.color = 'green';
@@ -210,6 +186,8 @@
                 // Clear reservation information
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
+                // Disable the release button when releasing the device
+                document.getElementById(`releaseButton${deviceId}`).disabled = true;
             }
         }
 
@@ -232,6 +210,8 @@
                 // Clear reservation information
                 delete reservations[deviceId];
                 saveReservationsToStorage(reservations);
+                // Disable the release button after releasing the device
+                document.getElementById(`releaseButton${deviceId}`).disabled = true;
             } else {
                 alert("You are not authorized to release this device.");
             }
